@@ -1,12 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import Navbar from '../Components/Core/Navbar';
 
 const Dashboard = () => {
-  useEffect(() => {
-    console.log(localStorage.getItem('accessToken'));
-  }, [])
-
   return (
-    <div>Dashboard</div>
+    <div>
+      <Navbar />
+    </div>
   );
 };
 

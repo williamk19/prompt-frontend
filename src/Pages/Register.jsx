@@ -1,4 +1,5 @@
-import { Box, CircularProgress, Container, Stack, Typography } from '@mui/material';
+import { Box, Container, Stack, Typography } from '@mui/material';
+import { lightBlue } from '@mui/material/colors';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -11,13 +12,6 @@ const Register = () => {
   const [address, setAddress] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const accessToken = localStorage.getItem('accessToken');
-    if (accessToken) {
-      navigate('/dashboard');
-    }
-  }, []);
 
   useEffect(() => {
     if (errorMessage !== '') {
@@ -57,6 +51,7 @@ const Register = () => {
           <Typography
             variant='h4'
             sx={{
+              textShadow: '0px 0px 3px rgba(0,0,0,0.5)',
               textAlign: 'center',
               marginBottom: '24px'
             }}
@@ -86,7 +81,7 @@ const Register = () => {
                   display: 'inline-block',
                   textDecoration: 'underline',
                   ml: 1,
-                  color: 'blue',
+                  color: lightBlue[500],
                   fontWeight: 'inherit'
                 }}>
                 Login

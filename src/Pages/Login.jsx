@@ -4,19 +4,21 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import LoginForm from '../Components/Login/LoginForm';
+import { lightBlue } from '@mui/material/colors';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
-
+  
   useEffect(() => {
-    const accessToken = localStorage.getItem('accessToken');
-    if (accessToken) {
-      navigate('/dashboard');
+    if (errorMessage !== '') {
+      setTimeout(() => {
+        setErrorMessage('');
+      }, 5000);
     }
-  }, []);
+  }, [errorMessage]);
 
   const submitLoginHandler = (e) => {
     e.preventDefault();
@@ -48,6 +50,7 @@ const Login = () => {
             component={'span'}
             variant='h4'
             sx={{
+              textShadow: '0px 0px 3px rgba(0,0,0,0.5)',
               textAlign: 'center',
               marginBottom: '24px'
             }}
@@ -75,7 +78,7 @@ const Login = () => {
                   display: 'inline-block',
                   textDecoration: 'underline',
                   ml: 1,
-                  color: 'blue',
+                  color: lightBlue[500],
                   fontWeight: 'inherit'
                 }}>
                 Daftar Akun

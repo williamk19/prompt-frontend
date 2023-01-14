@@ -6,12 +6,12 @@ const LoginForm = ({ setUsername, setPassword, submitLoginHandler }) => {
     <>
       <TextField
         onChange={(e) => setUsername(e.target.value)}
-        id="outlined-basic"
+        id="username"
         label="Username"
         variant="outlined" />
       <TextField
         onChange={(e) => setPassword(e.target.value)}
-        id="outlined-basic"
+        id="password"
         label="Password"
         type="password"
         variant="outlined" />
