@@ -10,7 +10,7 @@ const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
-  const [address, setAddress] = useState('');
+  const [email, setEmail] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const authenticated = useAuth();
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ const Register = () => {
         username: username,
         password: password,
         name: name,
-        address: address
+        email: email
       })
         .then((response) => {
           navigate('/');
@@ -65,7 +65,7 @@ const Register = () => {
               setUsername={setUsername}
               setPassword={setPassword}
               setName={setName}
-              setAddress={setAddress}
+              setEmail={setEmail}
               submitRegisterHandler={submitRegisterHandler}
             />
             <Typography

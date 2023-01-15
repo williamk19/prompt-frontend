@@ -5,7 +5,7 @@ const RegisterForm = ({
   setUsername,
   setPassword,
   setName,
-  setAddress,
+  setEmail,
   submitRegisterHandler
 }) => {
   return (
@@ -31,9 +31,9 @@ const RegisterForm = ({
         type='text'
         variant="outlined" />
       <TextField
-        onChange={(e) => setAddress(e.target.value)}
-        label="Alamat Rumah"
-        id='address'
+        onChange={(e) => setEmail(e.target.value)}
+        label="Alamat Email"
+        id='email'
         type='text'
         variant="outlined" />
       <Button
