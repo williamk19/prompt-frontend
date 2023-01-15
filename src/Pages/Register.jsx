@@ -2,8 +2,9 @@ import { Box, Container, Stack, Typography } from '@mui/material';
 import { lightBlue } from '@mui/material/colors';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import RegisterForm from '../Components/Register/RegisterForm';
+import useAuth from '../hooks/useAuth';
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -11,6 +12,7 @@ const Register = () => {
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const authenticated = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -40,69 +42,71 @@ const Register = () => {
   };
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        paddingTop: '5rem',
-      }}
-    >
-      <Container maxWidth='sm'>
-        <Stack spacing={2}>
-          <Typography
-            variant='h4'
-            sx={{
-              textShadow: '0px 0px 3px rgba(0,0,0,0.5)',
-              textAlign: 'center',
-              marginBottom: '24px'
-            }}
-          >
-            Project Management PT (PROMPT)
-          </Typography>
-          <RegisterForm
-            setUsername={setUsername}
-            setPassword={setPassword}
-            setName={setName}
-            setAddress={setAddress}
-            submitRegisterHandler={submitRegisterHandler}
-          />
-          <Typography
-            component={'span'}
-            sx={{
-              color: 'black',
-              textAlign: 'right',
-              fontWeight: '600'
-            }}
-          >
-            Telah memiliki akun?,
-            <Link to={'/'}>
-              <Typography
-                component={'span'}
-                sx={{
-                  display: 'inline-block',
-                  textDecoration: 'underline',
-                  ml: 1,
-                  color: lightBlue[500],
-                  fontWeight: 'inherit'
-                }}>
-                Login
-              </Typography>
-            </Link>
-          </Typography>
-          {errorMessage && (
+    <>
+      {authenticated ? (<Navigate to='/dashboard' />) : (<Box
+        sx={{
+          display: 'flex',
+          paddingTop: '5rem',
+        }}
+      >
+        <Container maxWidth='sm'>
+          <Stack spacing={2}>
             <Typography
+              variant='h4'
               sx={{
-                color: 'red',
-                textAlign: 'center'
+                textShadow: '0px 0px 3px rgba(0,0,0,0.5)',
+                textAlign: 'center',
+                marginBottom: '24px'
               }}
             >
-              Error Ketika Login:
-              <br />
-              {errorMessage}
+              Project Management PT (PROMPT)
             </Typography>
-          )}
-        </Stack>
-      </Container>
-    </Box>
+            <RegisterForm
+              setUsername={setUsername}
+              setPassword={setPassword}
+              setName={setName}
+              setAddress={setAddress}
+              submitRegisterHandler={submitRegisterHandler}
+            />
+            <Typography
+              component={'span'}
+              sx={{
+                color: 'black',
+                textAlign: 'right',
+                fontWeight: '600'
+              }}
+            >
+              Telah memiliki akun?,
+              <Link to={'/'}>
+                <Typography
+                  component={'span'}
+                  sx={{
+                    display: 'inline-block',
+                    textDecoration: 'underline',
+                    ml: 1,
+                    color: lightBlue[500],
+                    fontWeight: 'inherit'
+                  }}>
+                  Login
+                </Typography>
+              </Link>
+            </Typography>
+            {errorMessage && (
+              <Typography
+                sx={{
+                  color: 'red',
+                  textAlign: 'center'
+                }}
+              >
+                Error Ketika Registrasi:
+                <br />
+                {errorMessage}
+              </Typography>
+            )}
+          </Stack>
+        </Container>
+      </Box>)}
+    </>
   );
 };
 
