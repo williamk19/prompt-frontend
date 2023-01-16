@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 const useAuth = () => {
-  const [authenticated, setAuthenticated] = useState(
+  const [authenticated] = useState(
     localStorage.getItem('accessToken') || null
   );
 

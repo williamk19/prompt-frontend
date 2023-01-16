@@ -1,10 +1,10 @@
 import { Box, Container, Stack, Typography } from '@mui/material';
 import { lightBlue } from '@mui/material/colors';
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import RegisterForm from '../Components/Register/RegisterForm';
 import useAuth from '../hooks/useAuth';
+import { registerUser } from '../services/services';
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -23,21 +23,15 @@ const Register = () => {
     }
   }, [errorMessage]);
 
-  const submitRegisterHandler = (e) => {
+  const submitRegisterHandler = async (e) => {
     e.preventDefault();
     if (username.length > 0 && password.length > 0) {
-      axios.post('http://localhost:8080/auth/register', {
-        username: username,
-        password: password,
-        name: name,
-        email: email
-      })
-        .then((response) => {
-          navigate('/');
-        })
-        .catch((error) => {
-          setErrorMessage(error.message);
-        });
+      const { res, err } = await registerUser(username, password, name, email);
+      if (err) {
+        setErrorMessage(err.message);
+      } else if (res) {
+        navigate('/');
+      }
     }
   };
 

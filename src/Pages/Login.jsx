@@ -1,11 +1,11 @@
 import { Box, Typography } from '@mui/material';
 import { Container, Stack } from '@mui/system';
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import LoginForm from '../Components/Login/LoginForm';
 import { lightBlue } from '@mui/material/colors';
 import useAuth from '../hooks/useAuth';
+import { loginUser } from '../services/services';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -22,20 +22,16 @@ const Login = () => {
     }
   }, [errorMessage]);
 
-  const submitLoginHandler = (e) => {
+  const submitLoginHandler = async (e) => {
     e.preventDefault();
     if (username.length > 0 && password.length > 0) {
-      axios.post('http://localhost:8080/auth/login', {
-        username: username,
-        password: password
-      })
-        .then((response) => {
-          localStorage.setItem('accessToken', response.data.accessToken);
-          navigate('/dashboard');
-        })
-        .catch((error) => {
-          setErrorMessage(error.message);
-        });
+      const { res, err } = await loginUser(username, password);
+      if (err) {
+        setErrorMessage(err.message);
+      } else if (res) {
+        localStorage.setItem('accessToken', res.data.accessToken);
+        navigate('/dashboard');
+      }
     }
   };
 
