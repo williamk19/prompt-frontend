@@ -12,7 +12,7 @@ const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const authenticated = useAuth();
+  const { authenticated } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {

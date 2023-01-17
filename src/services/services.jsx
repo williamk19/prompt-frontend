@@ -25,11 +25,37 @@ export async function registerUser(username, password, name = null, email = null
     email: email
   })
     .then((response) => {
-      return response
+      return response;
     })
     .catch((error) => {
       err = error;
     });
-  
+
+  return await { res, err };
+}
+
+export async function getAllUser(token) {
+  let err = null;
+  const res = await axios.get('/users/list', {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  })
+    .then((response) => response)
+    .catch((error) => err = error);
+
+  return await { res, err };
+}
+
+export async function changeUserRole(id, roleName, token) {
+  let err = null;
+  const res = await axios.post(`/users/${id}/role`,
+    { roleName: roleName },
+    {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
   return await { res, err };
 }

@@ -11,7 +11,7 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const authenticated = useAuth();
+  const { authenticated } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,6 +30,8 @@ const Login = () => {
         setErrorMessage(err.message);
       } else if (res) {
         localStorage.setItem('accessToken', res.data.accessToken);
+        localStorage.setItem('username', res.data.username);
+        localStorage.setItem('role', res.data.role);
         navigate('/dashboard');
       }
     }

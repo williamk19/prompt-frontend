@@ -12,7 +12,7 @@ import { Box, Container } from '@mui/system';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = ({ username }) => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const pages = ['Project', 'Assign'];
   const navigate = useNavigate();
@@ -27,6 +27,8 @@ const Navbar = () => {
 
   const logoutHandler = () => {
     localStorage.removeItem('accessToken');
+    localStorage.removeItem('username');
+    localStorage.removeItem('role');
     navigate('/');
   };
 
@@ -118,6 +120,7 @@ const Navbar = () => {
               </Button>
             ))}
           </Box>
+          <Typography mx={2}>{username}</Typography>
           <Box sx={{ flexGrow: 0 }}>
             <MenuItem onClick={logoutHandler}>
               <Typography textAlign="center">LOGOUT</Typography>

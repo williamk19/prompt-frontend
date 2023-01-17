@@ -5,7 +5,15 @@ const useAuth = () => {
     localStorage.getItem('accessToken') || null
   );
 
-  return authenticated;
-}
+  const [username] = useState(
+    localStorage.getItem('username') || null
+  );
+
+  const [role] = useState(
+    localStorage.getItem('role') || null
+  );
+
+  return { authenticated, username, role };
+};
 
 export default useAuth;
