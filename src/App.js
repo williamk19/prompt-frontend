@@ -5,7 +5,7 @@ import Register from './Pages/Register';
 import Dashboard from './Pages/Dashboard';
 import ErrorPage from './Pages/ErrorPage';
 import axios from 'axios';
-axios.defaults.baseURL = 'http://localhost:8080';
+axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 
 const App = () => {
   return (

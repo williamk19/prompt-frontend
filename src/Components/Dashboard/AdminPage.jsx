@@ -51,15 +51,16 @@ const AdminPage = () => {
 
   const saveRowHandler = async ({ row, values }) => {
     const { res, err } = await changeUserRole(
-      row.original.id, 
-      values.roleName, 
-      authenticated);
+      row.original.id,
+      values.roleName,
+      authenticated
+    );
     getUserData();
-  }
+  };
 
   const closeRowHandler = () => {
     getUserData();
-  }
+  };
 
   return (
     <Container maxWidth="lg" sx={{
