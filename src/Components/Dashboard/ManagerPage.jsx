@@ -1,8 +1,8 @@
-import { Container, MenuItem, Typography } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import MaterialReactTable from "material-react-table";
 import useAuth from "../../hooks/useAuth";
-import { changeUserRole, getAllTask } from "../../services/services";
+import { getAllTask } from "../../services/services";
 
 const ManagerPage = () => {
   const [task, setTask] = useState([]);
@@ -26,9 +26,9 @@ const ManagerPage = () => {
       header: "Penerima Tugas",
     },
   ];
+  
   const getAllTaskFunction = async () => {
     const { res, err } = await getAllTask(authenticated);
-    console.log(res);
     setTask(res.data);
   };
 

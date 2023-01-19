@@ -5,6 +5,8 @@ import Register from "./Pages/Register";
 import Dashboard from "./Pages/Dashboard";
 import ErrorPage from "./Pages/ErrorPage";
 import axios from "axios";
+import Project from './Pages/Project';
+import TaskForm from './Pages/TaskForm';
 axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 
 const App = () => {
@@ -19,6 +21,16 @@ const App = () => {
       <Route
         path="/dashboard"
         element={<Dashboard />}
+        errorElement={<ErrorPage />}
+      />
+      <Route
+        path="/project"
+        element={<Project />}
+        errorElement={<ErrorPage />}
+      />
+      <Route
+        path="/create"
+        element={<TaskForm />}
         errorElement={<ErrorPage />}
       />
     </Routes>

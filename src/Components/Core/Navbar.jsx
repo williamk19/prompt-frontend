@@ -8,7 +8,7 @@ import {
   MenuItem
 } from '@mui/material';
 import logo from '../../assets/prompt-white.png';
-import { Adb as AdbIcon, Menu as MenuIcon } from '@mui/icons-material';
+import { Menu as MenuIcon } from '@mui/icons-material';
 import { Box, Container } from '@mui/system';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -27,7 +27,7 @@ const Navbar = ({ username, role }) => {
         ];
       case "ROLE_PM":
         return [
-          { name: 'Project', url: '/project' },
+          { name: 'Project', url: '/dashboard' },
           { name: 'Create', url: '/create' }
         ];
       case "ROLE_EMPLOYEE":
@@ -37,8 +37,7 @@ const Navbar = ({ username, role }) => {
         ];
       default:
         return [
-          { name: 'Project', url: '/project' },
-          { name: 'Create', url: '/create' }
+          { name: 'My Project', url: '/dashboard' },
         ];
     }
   };
@@ -138,13 +137,15 @@ const Navbar = ({ username, role }) => {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page, idx) => (
-              <Button
-                key={idx}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page.name}
-              </Button>
+              <Link color='black' key={idx} to={page.url}>
+                <Button
+                  key={idx}
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
+                >
+                  {page.name}
+                </Button>
+              </Link>
             ))}
           </Box>
           <Typography mx={2}>{username}</Typography>

@@ -80,3 +80,19 @@ export async function getAllTask(token) {
 
   return await { res, err };
 }
+
+export async function createTask(token, titleTask, descTask, status, userId) {
+  let err = null;
+  const res = await axios.post(`/task/create`, {
+    titleTask: titleTask,
+    descTask: descTask,
+    status: status,
+    userId: userId
+  }, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return await { res, err };
+}
