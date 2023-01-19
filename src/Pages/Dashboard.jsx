@@ -27,7 +27,7 @@ const Dashboard = () => {
     <>
       {!authenticated ? (<Navigate to='/' />) : (
         <Box>
-          <Navbar username={username} />
+          <Navbar username={username} role={role} />
           {rolesPageView(role)}
         </Box>
       )}

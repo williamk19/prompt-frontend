@@ -1,4 +1,4 @@
-import { Container, MenuItem } from "@mui/material";
+import { Container, MenuItem, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import MaterialReactTable from "material-react-table";
 import useAuth from "../../hooks/useAuth";
@@ -75,6 +75,12 @@ const AdminPage = () => {
         py: 6,
       }}
     >
+      <Typography sx={{
+        textShadow: '0px 0px 3px rgba(0,0,0,0.25)',
+        fontWeight: "700"
+      }} mb={3} variant="h5">
+        User Role
+      </Typography>
       <MaterialReactTable
         enableFullScreenToggle={false}
         enableDensityToggle={false}

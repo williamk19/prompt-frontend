@@ -1,4 +1,4 @@
-import { Container, MenuItem } from "@mui/material";
+import { Container, MenuItem, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import MaterialReactTable from "material-react-table";
 import useAuth from "../../hooks/useAuth";
@@ -7,22 +7,23 @@ import { changeUserRole, getAllTask } from "../../services/services";
 const ManagerPage = () => {
   const [task, setTask] = useState([]);
   const { authenticated, username } = useAuth();
-  const selectList = ["ROLE_ADMIN", "ROLE_PM", "ROLE_EMPLOYEE"];
+
   const columns = [
     {
-      accessorKey: "username",
-      header: "Username",
-      enableEditing: false,
+      accessorKey: "titleTask",
+      header: "Judul Tugas",
     },
     {
-      accessorKey: "name",
-      header: "Nama Lengkap",
-      enableEditing: false,
+      accessorKey: "descTask",
+      header: "Deskripsi Tugas",
     },
     {
-      accessorKey: "email",
-      header: "Email",
-      enableEditing: false,
+      accessorKey: "status",
+      header: "Status",
+    },
+    {
+      accessorKey: "user.username",
+      header: "Penerima Tugas",
     },
   ];
   const getAllTaskFunction = async () => {
@@ -35,10 +36,6 @@ const ManagerPage = () => {
     getAllTaskFunction();
   }, []);
 
-  useEffect(() => {
-    console.log(task);
-  }, [task]);
-
   return (
     <Container
       maxWidth="lg"
@@ -46,13 +43,17 @@ const ManagerPage = () => {
         py: 6,
       }}
     >
+      <Typography sx={{
+        textShadow: '0px 0px 3px rgba(0,0,0,0.25)',
+        fontWeight: "700"
+      }} mb={3} variant="h5">
+        Tugas Pekerjaan
+      </Typography>
       <MaterialReactTable
         enableFullScreenToggle={false}
         enableDensityToggle={false}
         enableHiding={false}
         columns={columns}
-        editingMode="row"
-        enableEditing
         data={task}
         muiTablePaginationProps={{
           rowsPerPageOptions: [5, 10],

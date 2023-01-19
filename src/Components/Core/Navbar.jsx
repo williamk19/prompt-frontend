@@ -7,15 +7,42 @@ import {
   Typography,
   MenuItem
 } from '@mui/material';
+import logo from '../../assets/prompt-white.png';
 import { Adb as AdbIcon, Menu as MenuIcon } from '@mui/icons-material';
 import { Box, Container } from '@mui/system';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-const Navbar = ({ username }) => {
+const Navbar = ({ username, role }) => {
   const [anchorElNav, setAnchorElNav] = useState(null);
-  const pages = ['Project', 'Assign'];
   const navigate = useNavigate();
+
+  const pagesByRole = (role) => {
+    switch (role) {
+      case "ROLE_ADMIN":
+        return [
+          { name: 'User', url: '/dashboard' },
+          { name: 'Project', url: '/project' },
+          { name: 'Create', url: '/create' }
+        ];
+      case "ROLE_PM":
+        return [
+          { name: 'Project', url: '/project' },
+          { name: 'Create', url: '/create' }
+        ];
+      case "ROLE_EMPLOYEE":
+        return [
+          { name: 'Project', url: '/project' },
+          { name: 'Create', url: '/create' }
+        ];
+      default:
+        return [
+          { name: 'Project', url: '/project' },
+          { name: 'Create', url: '/create' }
+        ];
+    }
+  };
+  const pages = pagesByRole(role);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -36,7 +63,6 @@ const Navbar = ({ username }) => {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
@@ -52,7 +78,7 @@ const Navbar = ({ username }) => {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            <img width={100} src={logo} alt="Logo" />
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -83,14 +109,15 @@ const Navbar = ({ username }) => {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
+              {pages.map((page, idx) => (
+                <Link key={idx} to={page.url}>
+                  <MenuItem onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center">{page.name}</Typography>
+                  </MenuItem>
+                </Link>
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -107,16 +134,16 @@ const Navbar = ({ username }) => {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            <img width={100} src={logo} alt="Logo" />
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
+            {pages.map((page, idx) => (
               <Button
-                key={page}
+                key={idx}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                {page}
+                {page.name}
               </Button>
             ))}
           </Box>

@@ -5,6 +5,7 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import RegisterForm from '../Components/Register/RegisterForm';
 import useAuth from '../hooks/useAuth';
 import { registerUser } from '../services/services';
+import logo from '../assets/prompt-black.png';
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -45,16 +46,22 @@ const Register = () => {
       >
         <Container maxWidth='sm'>
           <Stack spacing={2}>
-            <Typography
-              variant='h4'
+            <Box
               sx={{
-                textShadow: '0px 0px 3px rgba(0,0,0,0.5)',
-                textAlign: 'center',
-                marginBottom: '24px'
+                display: "flex",
+                justifyContent: "center",
+                mb: 3
               }}
             >
-              Project Management PT (PROMPT)
-            </Typography>
+              <img
+                sx={{
+                  textShadow: '0px 0px 3px rgba(0,0,0,0.5)',
+                  marginBottom: '24px'
+                }}
+                width={200}
+                src={logo}
+                alt="Logo" />
+            </Box>
             <RegisterForm
               setUsername={setUsername}
               setPassword={setPassword}

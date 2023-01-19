@@ -6,6 +6,7 @@ import LoginForm from '../Components/Login/LoginForm';
 import { lightBlue } from '@mui/material/colors';
 import useAuth from '../hooks/useAuth';
 import { loginUser } from '../services/services';
+import logo from '../assets/prompt-black.png';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -48,17 +49,22 @@ const Login = () => {
         >
           <Container maxWidth='sm'>
             <Stack spacing={2}>
-              <Typography
-                component={'span'}
-                variant='h4'
+              <Box
                 sx={{
-                  textShadow: '0px 0px 3px rgba(0,0,0,0.5)',
-                  textAlign: 'center',
-                  marginBottom: '24px'
+                  display: "flex",
+                  justifyContent: "center",
+                  mb: 3
                 }}
               >
-                Project Management PT (PROMPT)
-              </Typography>
+                <img
+                  sx={{
+                    textShadow: '0px 0px 3px rgba(0,0,0,0.5)',
+                    marginBottom: '24px'
+                  }}
+                  width={200}
+                  src={logo}
+                  alt="Logo" />
+              </Box>
               <LoginForm
                 setUsername={setUsername}
                 setPassword={setPassword}
