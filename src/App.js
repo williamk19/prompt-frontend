@@ -1,27 +1,26 @@
-import React from 'react';
-import { Route, Routes } from 'react-router-dom';
-import Login from './Pages/Login';
-import Register from './Pages/Register';
-import Dashboard from './Pages/Dashboard';
-import ErrorPage from './Pages/ErrorPage';
-import axios from 'axios';
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import Login from "./Pages/Login";
+import Register from "./Pages/Register";
+import Dashboard from "./Pages/Dashboard";
+import ErrorPage from "./Pages/ErrorPage";
+import axios from "axios";
 axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 
 const App = () => {
   return (
     <Routes>
+      <Route path="/" element={<Login />} errorElement={<ErrorPage />} />
       <Route
-        path='/'
-        element={<Login />}
-        errorElement={<ErrorPage />} />
-      <Route
-        path='/register'
+        path="/register"
         element={<Register />}
-        errorElement={<ErrorPage />} />
+        errorElement={<ErrorPage />}
+      />
       <Route
-        path='/dashboard'
+        path="/dashboard"
         element={<Dashboard />}
-        errorElement={<ErrorPage />} />
+        errorElement={<ErrorPage />}
+      />
     </Routes>
   );
 };
