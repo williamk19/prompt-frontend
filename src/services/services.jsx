@@ -132,3 +132,16 @@ export async function updateTask(token, id, titleTask, descTask, status, userId)
 
   return await { res, err };
 }
+
+export async function getTaskByUsername(token, username){
+  let err = null;
+  const res = await axios.post(`/task/user/${username}`,{
+    headers:{
+      Authorization:`Bearer ${token}`,
+    },
+  })
+    .then((response) => response)
+    .catch((error) => (err=error));
+  
+  return await {res,err};
+}
