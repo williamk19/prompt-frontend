@@ -1,12 +1,13 @@
 import { Typography } from '@mui/material';
 import { Box, Container } from '@mui/system';
 import React, { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import Navbar from '../Components/Core/Navbar';
 import TaskFormComponent from '../Components/TaskForm/TaskFormComponent';
 import useAuth from '../hooks/useAuth';
-import { createTask, getAllUser } from '../services/services';
+import { createTask, getAllUser, getTaskById, updateTask } from '../services/services';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const TaskForm = () => {
   const { authenticated, username, role } = useAuth();
@@ -14,8 +15,10 @@ const TaskForm = () => {
   const [taskTitle, setTaskTitle] = useState('');
   const [taskDesc, setTaskDesc] = useState('');
   const [taskAssignee, setTaskAssignee] = useState(userData[0]);
+  const [taskData, setTaskData] = useState();
   const [status, setStatus] = useState('TODO');
-
+  let location = useLocation();
+  let { taskId } = useParams();
   const navigate = useNavigate();
 
   const handleChange = (event) => {
@@ -24,14 +27,26 @@ const TaskForm = () => {
 
   const onSubmitHandler = async () => {
     if (taskTitle.length > 0 && taskDesc.length > 0 && taskAssignee.id !== null) {
-      const { res, err } = await createTask(
-        authenticated,
-        taskTitle,
-        taskDesc,
-        status,
-        taskAssignee.id
-      );
-      navigate('/project');
+      if (!taskData) {
+        const { res, err } = await createTask(
+          authenticated,
+          taskTitle,
+          taskDesc,
+          status,
+          taskAssignee.id
+        );
+        navigate('/project');
+      } else {
+        const {res, err} = await updateTask(
+          authenticated,
+          taskId,
+          taskTitle,
+          taskDesc,
+          status,
+          taskAssignee.id
+        )
+        navigate('/project');
+      }
     }
   };
 
@@ -47,8 +62,37 @@ const TaskForm = () => {
     setUserData(arrData);
   };
 
+  const getTaskData = async () => {
+    if (taskId) {
+      const { res, err } = await getTaskById(authenticated, taskId);
+      setTaskData(res.data);
+    }
+  };
+
+  useEffect(() => {
+    if (userData.length > 0 && taskData) {
+      const userDataId = userData.findIndex((u) => u.id === taskData.user.id);
+      setTaskTitle(taskData.titleTask);
+      setTaskDesc(taskData.descTask);
+      setTaskAssignee(userData[userDataId]);
+      setStatus(taskData.status);
+    } else {
+      setTaskAssignee(userData[0]);
+    }
+  }, [taskData, userData]);
+
+  useEffect(() => {
+    if (location.pathname === '/create') {
+      setTaskTitle('');
+      setTaskDesc('');
+      setTaskAssignee(userData[0]);
+      setStatus('TODO');
+    }
+  }, [location])
+
   useEffect(() => {
     getUserData();
+    getTaskData();
   }, []);
 
   return (
@@ -75,6 +119,8 @@ const TaskForm = () => {
               }}
             >
               <TaskFormComponent
+                taskTitle={taskTitle}
+                taskDesc={taskDesc}
                 userData={userData}
                 setTaskTitle={setTaskTitle}
                 setTaskDesc={setTaskDesc}

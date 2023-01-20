@@ -32,12 +32,11 @@ const Navbar = ({ username, role }) => {
         ];
       case "ROLE_EMPLOYEE":
         return [
-          { name: 'Project', url: '/project' },
-          { name: 'Create', url: '/create' }
+          { name: 'My Project', url: '/dashboard' }
         ];
       default:
         return [
-          { name: 'My Project', url: '/dashboard' },
+          { name: 'My Project', url: '/dashboard' }
         ];
     }
   };

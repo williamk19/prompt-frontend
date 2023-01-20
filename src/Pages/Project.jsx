@@ -1,7 +1,7 @@
 import { Container, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import React, { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import Navbar from '../Components/Core/Navbar';
 import useAuth from '../hooks/useAuth';
 import MaterialReactTable from "material-react-table";
@@ -10,9 +10,10 @@ import { getAllTask } from '../services/services';
 const Project = () => {
   const { authenticated, username, role } = useAuth();
   const [task, setTask] = useState([]);
+  const navigate = useNavigate();
 
   const getAllTaskFunction = async () => {
-    const { res, err } = await getAllTask(authenticated);
+    const { res } = await getAllTask(authenticated);
     setTask(res.data);
   };
 
@@ -67,6 +68,14 @@ const Project = () => {
                 showFirstButton: false,
                 showLastButton: false,
               }}
+              muiTableBodyRowProps={({ row }) => ({
+                onClick: (event) => {
+                  navigate(`/task/${row.original.id}`);
+                },
+                sx: {
+                  cursor: 'pointer',
+                },
+              })}
             />
           </Container>
         </Box>

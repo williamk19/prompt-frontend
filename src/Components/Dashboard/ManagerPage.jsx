@@ -3,8 +3,10 @@ import React, { useEffect, useState } from "react";
 import MaterialReactTable from "material-react-table";
 import useAuth from "../../hooks/useAuth";
 import { getAllTask } from "../../services/services";
+import { useNavigate } from 'react-router-dom';
 
 const ManagerPage = () => {
+  const navigate = useNavigate();
   const [task, setTask] = useState([]);
   const { authenticated, username } = useAuth();
 
@@ -60,6 +62,14 @@ const ManagerPage = () => {
           showFirstButton: false,
           showLastButton: false,
         }}
+        muiTableBodyRowProps={({ row }) => ({
+          onClick: (event) => {
+            navigate(`/task/${row.original.id}`);
+          },
+          sx: {
+            cursor: 'pointer',
+          },
+        })}
       />
     </Container>
   );

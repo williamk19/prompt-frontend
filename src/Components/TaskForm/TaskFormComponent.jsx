@@ -3,21 +3,23 @@ import { Stack } from '@mui/system';
 import React from 'react';
 
 const TaskFormComponent = ({
-  userData, 
-  setTaskTitle, 
-  setTaskDesc, 
-  taskAssignee, 
-  setTaskAssignee, 
-  status, 
-  handleChange, 
+  userData,
+  taskTitle,
+  taskDesc,
+  setTaskTitle,
+  setTaskDesc,
+  taskAssignee,
+  setTaskAssignee,
+  status,
+  handleChange,
   onSubmitHandler
 }) => {
   const [inputValue, setInputValue] = React.useState('');
-
   return (
     <Stack spacing={3}>
       <TextField
         fullWidth
+        value={taskTitle}
         onChange={(e) => setTaskTitle(e.target.value)}
         id="title-task"
         label="Judul Tugas"
@@ -25,6 +27,7 @@ const TaskFormComponent = ({
       <TextField
         fullWidth
         multiline
+        value={taskDesc}
         onChange={(e) => setTaskDesc(e.target.value)}
         rows={4}
         id="desc-task"
@@ -47,7 +50,7 @@ const TaskFormComponent = ({
         </Select>
       </FormControl>
       <Autocomplete
-        value={taskAssignee}
+        value={taskAssignee || null}
         onChange={(event, newValue) => {
           setTaskAssignee(newValue);
         }}
@@ -74,8 +77,8 @@ const TaskFormComponent = ({
             width: '10rem'
           }}
           variant="contained">
-            SUBMIT
-          </Button>
+          SUBMIT
+        </Button>
       </Box>
     </Stack>
   );

@@ -64,8 +64,9 @@ export async function changeUserRole(id, roleName, token) {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    }
-  );
+    })
+    .then((response) => response)
+    .catch((error) => (err = error));
 
   return await { res, err };
 }
@@ -76,7 +77,9 @@ export async function getAllTask(token) {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-  });
+  })
+    .then((response) => response)
+    .catch((error) => (err = error));
 
   return await { res, err };
 }
@@ -92,7 +95,40 @@ export async function createTask(token, titleTask, descTask, status, userId) {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-  });
+  })
+    .then((response) => response)
+    .catch((error) => (err = error));
+
+  return await { res, err };
+}
+
+export async function getTaskById(token, taskId) {
+  let err = null;
+  const res = await axios.get(`/task/${taskId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => response)
+    .catch((error) => (err = error));
+
+  return await { res, err };
+}
+
+export async function updateTask(token, id, titleTask, descTask, status, userId) {
+  let err = null;
+  const res = await axios.post(`/task/${id}/update`, {
+    titleTask: titleTask,
+    descTask: descTask,
+    status: status,
+    userId: userId
+  }, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => response)
+    .catch((error) => (err = error));
 
   return await { res, err };
 }

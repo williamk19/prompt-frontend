@@ -33,6 +33,11 @@ const App = () => {
         element={<TaskForm />}
         errorElement={<ErrorPage />}
       />
+      <Route
+        path="/task/:taskId"
+        element={<TaskForm />}
+        errorElement={<ErrorPage />}
+      />
     </Routes>
   );
 };
