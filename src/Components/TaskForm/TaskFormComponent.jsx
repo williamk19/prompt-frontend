@@ -12,6 +12,8 @@ const TaskFormComponent = ({
   setTaskAssignee,
   status,
   handleChange,
+  isEdit,
+  onDeleteHandler,
   onSubmitHandler
 }) => {
   const [inputValue, setInputValue] = React.useState('');
@@ -68,9 +70,20 @@ const TaskFormComponent = ({
       <Box
         sx={{
           display: 'flex',
-          justifyContent: 'end'
+          justifyContent: isEdit ? 'space-between' : 'end'
         }}
       >
+        {isEdit && (
+          <Button
+            onClick={onDeleteHandler}
+            sx={{
+              width: '10rem'
+            }}
+            color="error"
+            variant="contained">
+            HAPUS
+          </Button>
+        )}
         <Button
           onClick={onSubmitHandler}
           sx={{

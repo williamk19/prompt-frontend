@@ -5,7 +5,7 @@ import { Navigate, useParams } from 'react-router-dom';
 import Navbar from '../Components/Core/Navbar';
 import TaskFormComponent from '../Components/TaskForm/TaskFormComponent';
 import useAuth from '../hooks/useAuth';
-import { createTask, getAllUser, getTaskById, updateTask } from '../services/services';
+import { createTask, deleteTask, getAllUser, getTaskById, updateTask } from '../services/services';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
@@ -16,6 +16,7 @@ const TaskForm = () => {
   const [taskDesc, setTaskDesc] = useState('');
   const [taskAssignee, setTaskAssignee] = useState(userData[0]);
   const [taskData, setTaskData] = useState();
+  const [isEdit, setIsEdit] = useState(false);
   const [status, setStatus] = useState('TODO');
   let location = useLocation();
   let { taskId } = useParams();
@@ -27,7 +28,7 @@ const TaskForm = () => {
 
   const onSubmitHandler = async () => {
     if (taskTitle.length > 0 && taskDesc.length > 0 && taskAssignee.id !== null) {
-      if (!taskData) {
+      if (!taskData && isEdit === false) {
         const { res, err } = await createTask(
           authenticated,
           taskTitle,
@@ -47,6 +48,13 @@ const TaskForm = () => {
         )
         navigate('/project');
       }
+    }
+  };
+
+  const onDeleteHandler = async () => {
+    if (isEdit) {
+      const {res, err} = await deleteTask(authenticated, taskId);
+      navigate('/project');
     }
   };
 
@@ -76,6 +84,7 @@ const TaskForm = () => {
       setTaskDesc(taskData.descTask);
       setTaskAssignee(userData[userDataId]);
       setStatus(taskData.status);
+      setIsEdit(true);
     } else {
       setTaskAssignee(userData[0]);
     }
@@ -87,6 +96,7 @@ const TaskForm = () => {
       setTaskDesc('');
       setTaskAssignee(userData[0]);
       setStatus('TODO');
+      setIsEdit(false);
     }
   }, [location])
 
@@ -129,6 +139,8 @@ const TaskForm = () => {
                 taskAssignee={taskAssignee}
                 handleChange={handleChange}
                 onSubmitHandler={onSubmitHandler}
+                onDeleteHandler={onDeleteHandler}
+                isEdit={isEdit}
               />
             </Container>
           </Container>

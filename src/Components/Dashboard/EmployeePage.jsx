@@ -24,14 +24,13 @@ const EmployeePage = () => {
     },
   ];
   
-  const getAllTaskFunction = async () => {
-    const { res, err } = await getTaskByUsername(authenticated,username);
-    console.log(res.data);
+  const getTaskByUsernameFunction = async () => {
+    const { res } = await getTaskByUsername(authenticated, username);
     setTask(res.data);
   };
 
   useEffect(() => {
-    getAllTaskFunction();
+    getTaskByUsernameFunction();
   }, []);
 
   return (

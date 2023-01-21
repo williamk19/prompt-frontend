@@ -115,9 +115,9 @@ export async function getTaskById(token, taskId) {
   return await { res, err };
 }
 
-export async function updateTask(token, id, titleTask, descTask, status, userId) {
+export async function updateTask(token, taskId, titleTask, descTask, status, userId) {
   let err = null;
-  const res = await axios.post(`/task/${id}/update`, {
+  const res = await axios.post(`/task/${taskId}/update`, {
     titleTask: titleTask,
     descTask: descTask,
     status: status,
@@ -133,15 +133,28 @@ export async function updateTask(token, id, titleTask, descTask, status, userId)
   return await { res, err };
 }
 
-export async function getTaskByUsername(token, username){
+export async function getTaskByUsername(token, username) {
   let err = null;
-  const res = await axios.post(`/task/user/${username}`,{
-    headers:{
-      Authorization:`Bearer ${token}`,
+  const res = await axios.get(`/task/user/${username}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
     },
   })
     .then((response) => response)
-    .catch((error) => (err=error));
-  
-  return await {res,err};
+    .catch((error) => (err = error));
+
+  return await { res, err };
+}
+
+export async function deleteTask(token, taskId) {
+  let err = null;
+  const res = await axios.post(`/task/${taskId}/delete`, null, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => response)
+    .catch((error) => (err = error));
+
+  return await { res, err };
 }
