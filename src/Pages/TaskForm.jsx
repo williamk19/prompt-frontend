@@ -73,6 +73,9 @@ const TaskForm = () => {
   const getTaskData = async () => {
     if (taskId) {
       const { res, err } = await getTaskById(authenticated, taskId);
+      if (err) {
+        navigate('/dashboard');
+      }
       setTaskData(res.data);
     }
   };
