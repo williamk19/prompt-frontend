@@ -38,14 +38,14 @@ const TaskForm = () => {
         );
         navigate('/project');
       } else {
-        const {res, err} = await updateTask(
+        const { res, err } = await updateTask(
           authenticated,
           taskId,
           taskTitle,
           taskDesc,
           status,
           taskAssignee.id
-        )
+        );
         navigate('/project');
       }
     }
@@ -53,7 +53,7 @@ const TaskForm = () => {
 
   const onDeleteHandler = async () => {
     if (isEdit) {
-      const {res, err} = await deleteTask(authenticated, taskId);
+      const { res, err } = await deleteTask(authenticated, taskId);
       navigate('/project');
     }
   };
@@ -78,11 +78,17 @@ const TaskForm = () => {
   };
 
   useEffect(() => {
-    if (userData.length > 0 && taskData) {
+    if (userData.length > 0 && taskData && role !== 'ROLE_EMPLOYEE') {
       const userDataId = userData.findIndex((u) => u.id === taskData.user.id);
       setTaskTitle(taskData.titleTask);
       setTaskDesc(taskData.descTask);
       setTaskAssignee(userData[userDataId]);
+      setStatus(taskData.status);
+      setIsEdit(true);
+    } else if (userData.length > 0 && taskData && role === 'ROLE_EMPLOYEE') {
+      setTaskTitle(taskData.titleTask);
+      setTaskDesc(taskData.descTask);
+      setTaskAssignee(userData[0]);
       setStatus(taskData.status);
       setIsEdit(true);
     } else {
@@ -98,16 +104,29 @@ const TaskForm = () => {
       setStatus('TODO');
       setIsEdit(false);
     }
-  }, [location])
+  }, [location]);
 
   useEffect(() => {
-    getUserData();
+    if (taskData && role === 'ROLE_EMPLOYEE') {
+      setUserData([
+        { 
+          id: taskData.user.id,
+          label: taskData.user.username
+        },
+      ]);
+    }
+  }, [taskData]);
+
+  useEffect(() => {
+    if (role !== 'ROLE_EMPLOYEE') {
+      getUserData();
+    }
     getTaskData();
   }, []);
 
   return (
     <>
-      {(!authenticated || role === 'ROLE_EMPLOYEE') ? (<Navigate to='/' />) : (
+      {(!authenticated) ? (<Navigate to='/' />) : (
         <Box>
           <Navbar username={username} role={role} />
           <Container
@@ -141,6 +160,7 @@ const TaskForm = () => {
                 onSubmitHandler={onSubmitHandler}
                 onDeleteHandler={onDeleteHandler}
                 isEdit={isEdit}
+                role={role}
               />
             </Container>
           </Container>

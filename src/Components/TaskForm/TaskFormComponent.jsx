@@ -14,12 +14,14 @@ const TaskFormComponent = ({
   handleChange,
   isEdit,
   onDeleteHandler,
-  onSubmitHandler
+  onSubmitHandler,
+  role
 }) => {
   const [inputValue, setInputValue] = React.useState('');
   return (
     <Stack spacing={3}>
       <TextField
+        disabled={role === 'ROLE_EMPLOYEE' && true}
         fullWidth
         value={taskTitle}
         onChange={(e) => setTaskTitle(e.target.value)}
@@ -27,6 +29,7 @@ const TaskFormComponent = ({
         label="Judul Tugas"
         variant="outlined" />
       <TextField
+        disabled={role === 'ROLE_EMPLOYEE' && true}
         fullWidth
         multiline
         value={taskDesc}
@@ -52,6 +55,7 @@ const TaskFormComponent = ({
         </Select>
       </FormControl>
       <Autocomplete
+        disabled={role === 'ROLE_EMPLOYEE' && true}
         value={taskAssignee || null}
         onChange={(event, newValue) => {
           setTaskAssignee(newValue);
@@ -73,7 +77,7 @@ const TaskFormComponent = ({
           justifyContent: isEdit ? 'space-between' : 'end'
         }}
       >
-        {isEdit && (
+        {(isEdit && role !== 'ROLE_EMPLOYEE' ) && (
           <Button
             onClick={onDeleteHandler}
             sx={{
