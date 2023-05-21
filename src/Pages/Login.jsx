@@ -1,7 +1,7 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, Alert, AlertTitle } from '@mui/material';
 import { Container, Stack } from '@mui/system';
 import React, { useEffect, useState } from 'react';
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import LoginForm from '../Components/Login/LoginForm';
 import { lightBlue } from '@mui/material/colors';
 import useAuth from '../hooks/useAuth';
@@ -40,30 +40,43 @@ const Login = () => {
 
   return (
     <>
-      {authenticated ? (<Navigate to='/dashboard' />) : (
+      {authenticated ? (
+        <Navigate to='/dashboard' />
+      ) : (
         <Box
           sx={{
             display: 'flex',
-            paddingTop: '5rem',
-          }}
-        >
+            paddingTop: '2rem',
+          }}>
           <Container maxWidth='sm'>
+            <Alert
+              severity='info'
+              sx={{
+                marginBottom: '3rem',
+              }}>
+              <AlertTitle>
+                <strong>Default Login Info</strong>
+              </AlertTitle>
+              <strong>username :</strong> superadmin
+              <br />
+              <strong>password :</strong> superadmin
+            </Alert>
             <Stack spacing={2}>
               <Box
                 sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  mb: 3
-                }}
-              >
+                  display: 'flex',
+                  justifyContent: 'center',
+                  mb: 3,
+                }}>
                 <img
                   sx={{
                     textShadow: '0px 0px 3px rgba(0,0,0,0.5)',
-                    marginBottom: '24px'
+                    marginBottom: '24px',
                   }}
                   width={200}
                   src={logo}
-                  alt="Logo" />
+                  alt='Logo'
+                />
               </Box>
               <LoginForm
                 setUsername={setUsername}
@@ -75,9 +88,8 @@ const Login = () => {
                 sx={{
                   color: 'black',
                   textAlign: 'right',
-                  fontWeight: '600'
-                }}
-              >
+                  fontWeight: '600',
+                }}>
                 Belum memiliki akun?,
                 <Link to={'/register'}>
                   <Typography
@@ -87,7 +99,7 @@ const Login = () => {
                       textDecoration: 'underline',
                       ml: 1,
                       color: lightBlue[500],
-                      fontWeight: 'inherit'
+                      fontWeight: 'inherit',
                     }}>
                     Daftar Akun
                   </Typography>
@@ -97,9 +109,8 @@ const Login = () => {
                 <Typography
                   sx={{
                     color: 'red',
-                    textAlign: 'center'
-                  }}
-                >
+                    textAlign: 'center',
+                  }}>
                   Error Ketika Login:
                   <br />
                   {errorMessage}
@@ -109,7 +120,6 @@ const Login = () => {
           </Container>
         </Box>
       )}
-
     </>
   );
 };
